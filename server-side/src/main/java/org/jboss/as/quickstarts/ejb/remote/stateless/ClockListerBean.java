@@ -2,7 +2,6 @@ package org.jboss.as.quickstarts.ejb.remote.stateless;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -13,7 +12,6 @@ import javax.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.engine.spi.PersistentAttributeInterceptable;
 import org.hibernate.engine.spi.PersistentAttributeInterceptor;
-import org.hibernate.stat.Statistics;
 import org.hibernate.test.bytecode.enhancement.lazy.proxy.Address;
 import org.hibernate.test.bytecode.enhancement.lazy.proxy.CreditCardPayment;
 import org.hibernate.test.bytecode.enhancement.lazy.proxy.DebitCardPayment;
@@ -22,7 +20,6 @@ import org.hibernate.test.bytecode.enhancement.lazy.proxy.Order;
 import org.hibernate.test.bytecode.enhancement.lazy.proxy.OrderSupplemental;
 import org.hibernate.test.bytecode.enhancement.lazy.proxy.OrderSupplemental2;
 import org.hibernate.test.bytecode.enhancement.lazy.proxy.Payment;
-import org.jboss.as.quickstarts.model.Clock;
 
 @Stateless
 @Remote(ClockLister.class)
@@ -32,28 +29,16 @@ public class ClockListerBean implements ClockLister {
     public EntityManager em;
 
     @Override
-    public List<Clock> listAllClocks() {
-        return em.createQuery("from Clock").getResultList();
-    }
-
-    @Override
-    public void storeNewClock(final Clock newinstance) {
-        em.persist(newinstance);
-    }
-
-    @Override
     @Transactional
     public void verifyOrdersLoading() {
-
         final Session session = em.unwrap(Session.class);
-        boolean failed = false;
 
         final List<Order> orders = session.createQuery("select o from Order o", Order.class).list();
         for (Order order : orders) {
             System.out.println("Got Order#customer: " + order.getCustomer().getOid());
 
             if (order.getCustomer().getAddress() == null) {
-                failed = true;
+                throw new RuntimeException("Failed assertions");
             }
 
             final PersistentAttributeInterceptable interceptable = (PersistentAttributeInterceptable) order.getCustomer().getAddress();
@@ -69,11 +54,6 @@ public class ClockListerBean implements ClockLister {
                 throw new RuntimeException("Could not load class EnhancementAsProxyLazinessInterceptor !");
             }
         }
-
-        if (failed) {
-            throw new RuntimeException("Failed assertions");
-        }
-
     }
 
     @Override
@@ -170,22 +150,14 @@ public class ClockListerBean implements ClockLister {
     @Override
     @Transactional
     public void testDataCleanup(){
-
-        final Session session = em.unwrap(Session.class);
-
-        session.createQuery( "delete from CreditCardPayment" ).executeUpdate();
-        session.createQuery( "delete from DebitCardPayment" ).executeUpdate();
-
-        session.createQuery( "delete from OrderSupplemental2" ).executeUpdate();
-
-        session.createQuery( "delete from Order" ).executeUpdate();
-
-        session.createQuery( "delete from OrderSupplemental" ).executeUpdate();
-
-        session.createQuery( "delete from DomesticCustomer" ).executeUpdate();
-        session.createQuery( "delete from ForeignCustomer" ).executeUpdate();
-
-        session.createQuery( "delete from Address" ).executeUpdate();
+        em.createQuery( "delete from CreditCardPayment" ).executeUpdate();
+        em.createQuery( "delete from DebitCardPayment" ).executeUpdate();
+        em.createQuery( "delete from OrderSupplemental2" ).executeUpdate();
+        em.createQuery( "delete from Order" ).executeUpdate();
+        em.createQuery( "delete from OrderSupplemental" ).executeUpdate();
+        em.createQuery( "delete from DomesticCustomer" ).executeUpdate();
+        em.createQuery( "delete from ForeignCustomer" ).executeUpdate();
+        em.createQuery( "delete from Address" ).executeUpdate();
     }
 
 }
