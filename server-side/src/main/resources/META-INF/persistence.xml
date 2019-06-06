@@ -12,9 +12,10 @@
          <property name="hibernate.cache.use_second_level_cache" value="false"/>
          <property name="hibernate.cache.use_query_cache" value="false"/>
 
-         <!-- following two are essential to test these things: -->
+         <!-- following three are essential to test these things: -->
          <property name="hibernate.bytecode.allow_enhancement_as_proxy" value="true"/>
          <property name="hibernate.generate_statistics" value="true"/>
+         <property name="hibernate.jpa.compliance.proxy" value="false"/>
 
       </properties>
    </persistence-unit>

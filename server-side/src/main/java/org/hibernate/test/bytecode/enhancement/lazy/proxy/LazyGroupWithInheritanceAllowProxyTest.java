@@ -73,13 +73,13 @@ public class LazyGroupWithInheritanceAllowProxyTest /*extends BaseNonConfigCoreF
 
 	@Test
 	public void queryEntityWithAssociationToAbstract() {
+
+		inTransaction(
+				session -> {
 		final Statistics stats = sessionFactory().getStatistics();
 		stats.clear();
 
 		final AtomicInteger expectedQueryCount = new AtomicInteger( 0 );
-
-		inTransaction(
-				session -> {
 					final List<Order> orders = session.createQuery( "select o from Order o", Order.class ).list();
 
 					expectedQueryCount.set( 1 );

@@ -23,5 +23,9 @@ public interface ClockLister {
      */
     void verifyOrdersLoading();
 
+    void verifyOrdersComplexLoading();
+
     void testDataSetup();
+
+    void testDataCleanup();
 }

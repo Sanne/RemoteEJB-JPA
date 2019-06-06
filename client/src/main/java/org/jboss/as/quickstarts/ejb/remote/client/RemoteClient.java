@@ -14,12 +14,19 @@ public final class RemoteClient {
     private static final String HTTP = "http";
 
     public static void main(String[] args) throws Exception {
+
         ClockLister clockLister = lookupRemoteClocks();
+        try {
 
-        clockLister.testDataSetup();
+            clockLister.testDataSetup();
 
-        clockLister.verifyOrdersLoading();
+            clockLister.verifyOrdersLoading();
 
+            clockLister.verifyOrdersComplexLoading();
+
+        } finally {
+            clockLister.testDataCleanup();
+        }
     }
 
     private static ClockLister lookupRemoteClocks() throws NamingException {
