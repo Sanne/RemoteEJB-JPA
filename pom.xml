@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-parent</artifactId>
+        <version>28.0.0.redhat-00001</version>
+    </parent>
+
+    <artifactId>ejb-remote-tracing</artifactId>
+    <groupId>org.jboss.jboss-prototypes</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Testing ejb-remote tracing</name>
+    <description>Experimenting with Byteman rules for remote tracing</description>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!--
+        This POC consists of a server side component and a client that accesses the server side component.
+     -->
+    <modules>
+        <module>server-side</module>
+        <module>client</module>
+    </modules>
+
+    <!-- Most of this is insipired from the EAP7 quickstarts -->
+    <properties>
+        <root.dir>${project.basedir}</root.dir>
+        <jboss.home.name>EAP7_HOME</jboss.home.name>
+        <product.name>JBoss EAP</product.name>
+        <product.version>7.2.0.GA</product.version>
+        <!-- A base list of dependency and plug-in version used in the various quick starts. -->
+        <version.wildfly.maven.plugin>2.0.0.Final</version.wildfly.maven.plugin>
+        <version.org.wildfly.checkstyle-config>1.0.7.Final</version.org.wildfly.checkstyle-config>
+        <version.org.wildfly.quickstarts.documentation.plugin>2.0.0.Beta1</version.org.wildfly.quickstarts.documentation.plugin>
+        <!-- other plug-in versions -->
+        <version.com.mycyla.license>3.0</version.com.mycyla.license>
+        <version.checkstyle>8.5</version.checkstyle>
+        <version.jaxws-tools-maven-plugin>1.2.2.Final</version.jaxws-tools-maven-plugin>
+        <!-- Explicitly declaring the source encoding eliminates the following
+            message: [WARNING] Using platform encoding (UTF-8 actually) to copy
+            filtered resources, i.e. build is platform dependent! -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <version.server.bom>7.2.0.GA</version.server.bom>
+
+        <!-- Versions of dependencies on server's core -->
+        <version.commons-io>2.5.0.redhat-3</version.commons-io>
+        <version.org.apache.httpcomponents.httpclient>4.5.2.redhat-2</version.org.apache.httpcomponents.httpclient>
+        <version.org.apache.xerces>2.12.0.SP02-redhat-00001</version.org.apache.xerces>
+        <version.org.jboss.msc.jboss-msc>1.4.5.Final-redhat-00001</version.org.jboss.msc.jboss-msc>
+        <version.org.slf4j>1.7.22.redhat-2</version.org.slf4j>
+
+        <!-- Versions of dependencies on server -->
+        <version.com.fasterxml.jackson>2.9.5.redhat-2</version.com.fasterxml.jackson>
+        <version.com.h2database>1.4.193.redhat-2</version.com.h2database>
+        <version.com.sun.istack>3.0.5.redhat-1</version.com.sun.istack>
+        <version.org.bouncycastle>1.60.0.redhat-00001</version.org.bouncycastle>
+        <version.org.jboss.ws.cxf>5.2.4.Final-redhat-00001</version.org.jboss.ws.cxf>
+        <version.sun.saaj-impl>1.3.16.SP1-redhat-6</version.sun.saaj-impl>
+
+        <!-- Other versions of dependencies -->
+        <version.arquillian.angularjs.graphene>1.2.0.Beta1</version.arquillian.angularjs.graphene>
+        <version.json.path>2.0.0</version.json.path>
+        <version.org.json>20150729</version.org.json>
+        <version.ro.isdc.wro4j>1.7.9</version.ro.isdc.wro4j>
+        <version.spring.framework>4.3.14.RELEASE</version.spring.framework>
+
+        <jboss.developer.drupal.url>http://developer-rhdp-drupal.web.stage.ext.phx2.redhat.com/</jboss.developer.drupal.url>
+        <linkXRef>false</linkXRef>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.jboss.eap</groupId>
+                <artifactId>wildfly-ejb-client-bom</artifactId>
+                <version>${version.server.bom}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.eap</groupId>
+                <artifactId>wildfly-jms-client-bom</artifactId>
+                <version>${version.server.bom}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${version.org.apache.httpcomponents.httpclient}</version>
+            </dependency>
+            <!-- JBoss distributes a complete set of Java EE APIs including a Bill
+                of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection)
+                of artifacts. We use this here so that we always get the correct versions
+                of artifacts. Here we use the jboss-eap-javaee8-with-tools stack (you can
+                read this as the JBoss stack of the Java EE APIs, with some extras tools
+                for your project, such as Arquillian for testing) -->
+            <dependency>
+                <groupId>org.jboss.bom</groupId>
+                <artifactId>jboss-eap-javaee8-with-tools</artifactId>
+                <version>${version.server.bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Activate the JBoss Enterprise Maven Repository.
+
+        NOTE: Configuring the Maven repository in the pom.xml file is not a recommended procedure
+        and is only done here to make it easier to use the quickstarts.
+
+        For more information about how to configure Maven for your application,
+        see the section entitled 'Use the Maven Repository'
+        in the Development Guide for Red Hat JBoss Enterprise Application Platform located here:
+
+        https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/
+    -->
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>jboss-enterprise-maven-repository</id>
+            <url>https://maven.repository.redhat.com/ga/</url>
+        </repository>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>jboss-enterprise-maven-repository-ea</id>
+            <url>https://maven.repository.redhat.com/earlyaccess/all/</url>
+        </repository>
+        <repository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>jboss-enterprise-maven-repository</id>
+            <url>https://maven.repository.redhat.com/ga/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>jboss-enterprise-maven-repository-ea</id>
+            <url>https://maven.repository.redhat.com/earlyaccess/all/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+        <!-- Set the name of the WAR, used as the context root when the app is deployed. -->
+        <finalName>${project.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-maven-plugin</artifactId>
+                    <version>${version.wildfly.maven.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-ejb-plugin</artifactId>
+                    <version>${version.ejb.plugin}</version>
+                    <configuration>
+                        <!-- Tell Maven we are using EJB -->
+                        <ejbVersion>3.2</ejbVersion>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

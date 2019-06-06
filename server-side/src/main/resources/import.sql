@@ -1,0 +1,3 @@
+-- Unused, but might com in useful.
+-- insert into Clock (id, name) values (0, 'Clock Zero')
+-- insert into Clock (id, name) values (1, 'Clock One')
