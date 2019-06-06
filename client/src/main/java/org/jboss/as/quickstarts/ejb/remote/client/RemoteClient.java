@@ -1,15 +1,12 @@
 package org.jboss.as.quickstarts.ejb.remote.client;
 
 import java.util.Hashtable;
-import java.util.List;
-import java.util.UUID;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.jboss.as.quickstarts.ejb.remote.stateless.ClockLister;
-import org.jboss.as.quickstarts.model.Clock;
 
 
 public final class RemoteClient {
@@ -18,19 +15,11 @@ public final class RemoteClient {
 
     public static void main(String[] args) throws Exception {
         ClockLister clockLister = lookupRemoteClocks();
-        clockLister.storeNewClock(createNewClock());
-        final List<Clock> clocks = clockLister.listAllClocks();
-        for (Clock c : clocks) {
-            System.out.println("Clock: " + c.getName());
-        }
-    }
 
-    private static Clock createNewClock() {
-        final Clock clock = new Clock();
-        final String uuid = UUID.randomUUID().toString();
-        System.out.println("Creating new clock " + uuid);
-        clock.setName(uuid);
-        return clock;
+        clockLister.testDataSetup();
+
+        clockLister.verifyOrdersLoading();
+
     }
 
     private static ClockLister lookupRemoteClocks() throws NamingException {

@@ -35,6 +35,12 @@
             <type>ejb-client</type>
         </dependency>
 
+        <!-- The model is enhanced: requires Hibernate on classpath to allow deserializing them  -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -56,13 +62,6 @@
                     </arguments>
                     <!--<detail>true</detail>-->
                 </configuration>
-                <!--<executions>
-                    <execution>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                </executions>-->
             </plugin>
             <!-- build standalone exe jar -->
             <plugin>

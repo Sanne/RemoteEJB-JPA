@@ -9,6 +9,13 @@
       <properties>
          <property name="hibernate.hbm2ddl.auto" value="create-drop" />
          <property name="hibernate.show_sql" value="true" />
+         <property name="hibernate.cache.use_second_level_cache" value="false"/>
+         <property name="hibernate.cache.use_query_cache" value="false"/>
+
+         <!-- following two are essential to test these things: -->
+         <property name="hibernate.bytecode.allow_enhancement_as_proxy" value="true"/>
+         <property name="hibernate.generate_statistics" value="true"/>
+
       </properties>
    </persistence-unit>
 </persistence>
