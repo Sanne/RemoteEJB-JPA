@@ -1,0 +1,8 @@
+RULE {{CLASS}}_{{METHOD}}_{{PHASE}}
+{{TYPE}} {{PACKAGE}}.{{CLASS}}
+METHOD {{METHOD}}
+AT {{PHASE}}
+IF TRUE
+DO
+((org.jboss.logging.Logger) linked("loggers", "{{CLASS}}_LOGGER")).info(""+Thread.currentThread().getId()+":{{SUBSYSTEM}}:{{CLASS}}.{{METHOD}}:{{PHASE}}:"+System.nanoTime());
+ENDRULE
