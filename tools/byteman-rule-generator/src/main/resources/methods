@@ -1,0 +1,17 @@
+EJB3:org.jboss.as.ejb3.remote:AssociationImpl:CLASS:N:invokeMethod
+EJB3:org.jboss.as.ee.component:ManagedReferenceMethodInterceptor:CLASS:N:processInvocation
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:executeNativeUpdate
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:executeUpdate
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:flush
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:immediateLoad
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:initializeCollection
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:iterate
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:iterateFilter
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:list
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:listCustomQuery
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:listFilter
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:scroll
+HHH:org.hibernate.engine.spi:SharedSessionContractImplementor:INTERFACE:N:scrollCustomQuery
+JBOSSAS:org.jboss.as.server:ApplicationServerService:CLASS:N:start
+JCA:org.jboss.jca.adapters.jdbc:WrappedStatement:CLASS:Y:execute
+JCA:org.jboss.jca.adapters.jdbc:WrappedStatement:CLASS:Y:executeQuery
