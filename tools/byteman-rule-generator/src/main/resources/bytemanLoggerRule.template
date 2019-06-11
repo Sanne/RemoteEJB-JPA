@@ -1,0 +1,7 @@
+RULE {{CLASS}}_logger_init
+{{TYPE}} {{PACKAGE}}.{{CLASS}}
+METHOD {{METHOD}}
+AT ENTRY
+IF TRUE
+DO link("LOGGER", org.jboss.logging.Logger.getLogger("org.jboss.tracing.SubsystemTracing"))
+ENDRULE

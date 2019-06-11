@@ -2,7 +2,7 @@ RULE {{CLASS}}_{{METHOD}}_{{PHASE}}
 {{TYPE}} {{PACKAGE}}.{{CLASS}}
 METHOD {{METHOD}}
 AT {{PHASE}}
+BIND logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
 IF TRUE
-DO
-((org.jboss.logging.Logger) linked("loggers", "{{CLASS}}_LOGGER")).info(""+Thread.currentThread().getId()+":{{SUBSYSTEM}}:{{CLASS}}.{{METHOD}}:{{PHASE}}:"+System.nanoTime());
+DO logger.info(""+Thread.currentThread().getId()+":{{SUBSYSTEM}}:{{CLASS}}.{{METHOD}}:{{PHASE}}:"+System.nanoTime());
 ENDRULE

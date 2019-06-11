@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-public class BytemanRulesParser {
+public class BytemanRulesGenerator {
 
     static String BYTEMAN_FILE = "/tmp/bytemanRules.btm";
     static String METHODS_RESOURCE = "traceMethods";
@@ -15,13 +15,13 @@ public class BytemanRulesParser {
 
         try (PrintWriter out = new PrintWriter(BYTEMAN_FILE)) {
 
-            generateRuleSet(out, new LoggerInitRuleGenerator());
+            generateRuleSetNoInput(out, new TracingLoggerInitRuleGenerator());
             generateRuleSet(out, new TraceRuleGenerator());
         }
     }
 
     private static void generateRuleSet(PrintWriter out, RulesetGenerator generator) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(BytemanRulesParser.class.getClassLoader().getResourceAsStream(METHODS_RESOURCE)))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(BytemanRulesGenerator.class.getClassLoader().getResourceAsStream(METHODS_RESOURCE)))) {
 
             generator.generateRules(reader, out);
 
@@ -32,4 +32,12 @@ public class BytemanRulesParser {
         }
 
     }
+    private static void generateRuleSetNoInput(PrintWriter out, RulesetGenerator generator) {
+        try {
+            generator.generateRules(null, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

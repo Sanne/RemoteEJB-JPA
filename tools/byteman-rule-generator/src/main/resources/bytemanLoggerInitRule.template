@@ -1,8 +1,0 @@
-RULE {{CLASS}}_logger_init
-{{TYPE}} {{PACKAGE}}.{{CLASS}}
-METHOD <clinit>
-AT ENTRY
-IF TRUE
-DO
-link("loggers", "{{CLASS}}_LOGGER", org.jboss.logging.Logger.getLogger("TRACE_{{CLASS}}")
-ENDRULE
