@@ -75,7 +75,24 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+
+          <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>exec-maven-plugin</artifactId>
+              <configuration>
+                  <executable>java</executable>
+                  <workingDirectory>${project.build.directory}/exec-working-directory</workingDirectory>
+                  <arguments>
+                      <argument>-classpath</argument>
+                      <classpath></classpath>
+                      <argument>org.jboss.prototypes.tools.BytemanRulesGenerator</argument>
+                  </arguments>
+                  <!--<detail>true</detail>-->
+              </configuration>
+          </plugin>
+
       </plugins>
     </pluginManagement>
+
   </build>
 </project>
