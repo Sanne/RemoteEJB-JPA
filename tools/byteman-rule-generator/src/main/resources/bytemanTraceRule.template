@@ -2,8 +2,13 @@ RULE {{CLASS}}_{{METHOD}}_{{PHASE}}
 {{TYPE}} {{PACKAGE}}.{{CLASS}}
 METHOD {{METHOD}}
 AT {{PHASE}}
-BIND logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
-stringBuilder:java.lang.StringBuilder = new java.lang.StringBuilder();
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
 IF TRUE
-DO logger.info(stringBuilder.append(Thread.currentThread().getId()).append(":{{SUBSYSTEM}}:{{CLASS}}.{{METHOD}}:{{PHASE}}:").append(System.nanoTime()).toString());
+DO
+logger.info(stringBuilder.append(Thread.currentThread().getId()).append(":{{SUBSYSTEM}}:{{CLASS}}.{{METHOD}}:{{PHASE}}:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+stringBuilder.trimToSize();
 ENDRULE

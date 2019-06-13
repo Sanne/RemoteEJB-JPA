@@ -1,0 +1,8 @@
+RULE Thread_StringBuilder_init
+CLASS java.lang.Thread
+METHOD <init>
+AT ENTRY
+BIND th:java.lang.Thread = $0;
+IF TRUE
+DO link(th, "STRING_BUILDER", new java.lang.StringBuilder())
+ENDRULE

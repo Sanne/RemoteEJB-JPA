@@ -16,6 +16,7 @@ public class BytemanRulesGenerator {
         try (PrintWriter out = new PrintWriter(BYTEMAN_FILE)) {
 
             generateRuleSetNoInput(out, new TracingLoggerInitRuleGenerator());
+            generateRuleSetNoInput(out, new ThreadStringBuilderRuleGenerator());
             generateRuleSet(out, new TraceRuleGenerator());
         }
     }
