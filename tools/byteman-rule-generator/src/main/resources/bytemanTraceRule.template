@@ -3,6 +3,7 @@ RULE {{CLASS}}_{{METHOD}}_{{PHASE}}
 METHOD {{METHOD}}
 AT {{PHASE}}
 BIND logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = new java.lang.StringBuilder();
 IF TRUE
-DO logger.info(""+Thread.currentThread().getId()+":{{SUBSYSTEM}}:{{CLASS}}.{{METHOD}}:{{PHASE}}:"+System.nanoTime());
+DO logger.info(stringBuilder.append(Thread.currentThread().getId()).append(":{{SUBSYSTEM}}:{{CLASS}}.{{METHOD}}:{{PHASE}}:").append(System.nanoTime()).toString());
 ENDRULE
