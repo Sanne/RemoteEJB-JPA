@@ -66,7 +66,7 @@ Tracing rules will be written to;
                  </handlers>
              </logger>
              <formatter name="PLAIN">
-                 <pattern-formatter pattern="%s%e%n"/>
+                 <pattern-formatter pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %s%e%n"/>
              </formatter>
              
 ...            
