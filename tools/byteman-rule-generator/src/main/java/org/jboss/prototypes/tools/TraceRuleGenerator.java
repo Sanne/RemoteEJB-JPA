@@ -18,22 +18,24 @@ public class TraceRuleGenerator extends RuleGenerator {
         if (reader != null) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] instrumentationPoint = line.split(":");
-                Map<String, String> templateParams = new HashMap<>();
+                if (!line.equals("") && !line.substring(0,1).equals("#")) {
+                    String[] instrumentationPoint = line.split(":");
+                    Map<String, String> templateParams = new HashMap<>();
 
-                templateParams.put("SUBSYSTEM", instrumentationPoint[0]);
-                templateParams.put("PACKAGE", (instrumentationPoint[4].equals("Y") ? "^" : "") + instrumentationPoint[1]);
-                templateParams.put("CLASS", instrumentationPoint[2]);
-                templateParams.put("TYPE", instrumentationPoint[3]);
-                templateParams.put("METHOD", instrumentationPoint[5]);
-                templateParams.put("PHASE", "ENTRY");
-                templateParams.put("LOG_FILE", LOG_FILE);
+                    templateParams.put("SUBSYSTEM", instrumentationPoint[0]);
+                    templateParams.put("PACKAGE", (instrumentationPoint[4].equals("Y") ? "^" : "") + instrumentationPoint[1]);
+                    templateParams.put("CLASS", instrumentationPoint[2]);
+                    templateParams.put("TYPE", instrumentationPoint[3]);
+                    templateParams.put("METHOD", instrumentationPoint[5]);
+                    templateParams.put("PHASE", "ENTRY");
+                    templateParams.put("LOG_FILE", LOG_FILE);
 
-                generateTemplate("bytemanTraceRule.template", templateParams, out);
+                    generateTemplate("bytemanTraceRule.template", templateParams, out);
 
-                templateParams.put("PHASE", "EXIT");
+                    templateParams.put("PHASE", "EXIT");
 
-                generateTemplate("bytemanTraceRule.template", templateParams, out);
+                    generateTemplate("bytemanTraceRule.template", templateParams, out);
+                }
 
             }
         } else {
