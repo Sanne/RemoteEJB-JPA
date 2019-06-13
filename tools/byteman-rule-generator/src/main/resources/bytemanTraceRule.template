@@ -10,5 +10,4 @@ IF TRUE
 DO
 logger.info(stringBuilder.append(Thread.currentThread().getId()).append(":{{SUBSYSTEM}}:{{CLASS}}.{{METHOD}}:{{PHASE}}:").append(System.nanoTime()).toString());
 stringBuilder.setLength(0);
-stringBuilder.trimToSize();
 ENDRULE
