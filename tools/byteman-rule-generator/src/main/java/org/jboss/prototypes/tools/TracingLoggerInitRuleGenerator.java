@@ -17,13 +17,10 @@ public class TracingLoggerInitRuleGenerator extends RuleGenerator {
 
     public void generateRules(BufferedReader reader, PrintWriter out) throws IOException {
 
-        Set<String> loggerSet = new TreeSet<>();
-
         if (reader != null) {
             throw new RuntimeException("This rule generator does not expect input file");
         }
         Map<String, String> templateParams = new HashMap<>();
-
 
         templateParams.put("PACKAGE", "org.jboss.as.server");
         templateParams.put("CLASS", "ApplicationServerService");

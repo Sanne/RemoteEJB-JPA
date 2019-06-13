@@ -3,5 +3,5 @@ RULE {{CLASS}}_logger_init
 METHOD {{METHOD}}
 AT ENTRY
 IF TRUE
-DO link("LOGGER", org.jboss.logging.Logger.getLogger("org.jboss.tracing.SubsystemTracing"))
+DO link("LOGGER", org.jboss.logging.Logger.getLogger("org.jboss.tracing.SubsystemTracing"));
 ENDRULE

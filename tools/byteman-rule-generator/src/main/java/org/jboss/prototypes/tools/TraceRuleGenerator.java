@@ -36,6 +36,8 @@ public class TraceRuleGenerator extends RuleGenerator {
                 generateTemplate("bytemanTraceRule.template", templateParams, out);
 
             }
+        } else {
+            throw new RuntimeException("This rule generator expects input file!");
         }
 
     }

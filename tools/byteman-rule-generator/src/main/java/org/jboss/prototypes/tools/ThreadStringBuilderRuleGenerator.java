@@ -17,15 +17,11 @@ public class ThreadStringBuilderRuleGenerator extends RuleGenerator {
 
     public void generateRules(BufferedReader reader, PrintWriter out) throws IOException {
 
-        Set<String> loggerSet = new TreeSet<>();
-
         if (reader != null) {
             throw new RuntimeException("This rule generator does not expect input file");
         }
-        Map<String, String> templateParams = new HashMap<>();
 
-
-        generateTemplate(TEMPLATE_NAME, templateParams, out);
+        generateTemplate(TEMPLATE_NAME, new HashMap<>(), out);
 
     }
 

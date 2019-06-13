@@ -8,6 +8,6 @@ logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
 stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
 IF TRUE
 DO
-logger.info(stringBuilder.append(Thread.currentThread().getId()).append(":{{SUBSYSTEM}}:{{CLASS}}.{{METHOD}}:{{PHASE}}:").append(System.nanoTime()).toString());
+logger.info(stringBuilder.append(th.getId()).append(":{{SUBSYSTEM}}:{{CLASS}}.{{METHOD}}:{{PHASE}}:").append(System.nanoTime()).toString());
 stringBuilder.setLength(0);
 ENDRULE
