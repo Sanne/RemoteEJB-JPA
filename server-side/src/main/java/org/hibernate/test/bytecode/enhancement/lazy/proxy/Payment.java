@@ -17,27 +17,17 @@ import javax.persistence.InheritanceType;
  */
 @Entity(name = "Payment")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Payment {
-	private Integer oid;
+public abstract class Payment extends Model {
 	private Float amount;
 
 	public Payment() {
 	}
 
 	public Payment(Integer oid, Float amount) {
-		this.oid = oid;
+		super.setId( oid );
 		this.amount = amount;
 	}
 
-	@Id
-	@Column(name = "oid")
-	public Integer getOid() {
-		return oid;
-	}
-
-	public void setOid(Integer oid) {
-		this.oid = oid;
-	}
 
 	public Float getAmount() {
 		return amount;

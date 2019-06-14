@@ -29,9 +29,7 @@ import org.hibernate.annotations.LazyToOneOption;
 @Entity(name = "Order")
 @Table(name = "`order`")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Order {
-	private Integer oid;
-
+public class Order extends Model {
 	private String theText;
 
 	private Customer customer;
@@ -44,19 +42,9 @@ public class Order {
 	}
 
 	public Order(Integer oid, String theText, Customer customer) {
-		this.oid = oid;
+		super.setId( oid );
 		this.theText = theText;
 		this.customer = customer;
-	}
-
-	@Id
-	@Column(name = "oid")
-	public Integer getOid() {
-		return oid;
-	}
-
-	public void setOid(Integer oid) {
-		this.oid = oid;
 	}
 
 	public String getTheText() {

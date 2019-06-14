@@ -16,8 +16,8 @@ import javax.persistence.Table;
  */
 @Entity(name = "Address")
 @Table(name = "address")
-public class Address {
-	private Integer id;
+public class Address extends Model {
+
 
 	private String text;
 
@@ -25,18 +25,8 @@ public class Address {
 	}
 
 	public Address(Integer id, String text) {
-		this.id = id;
+		super.setId( id );
 		this.text = text;
-	}
-
-	@Id
-	@Column(name = "oid")
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getText() {
