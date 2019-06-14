@@ -16,26 +16,15 @@ import javax.persistence.Table;
  */
 @Entity(name = "OrderSupplemental")
 @Table(name = "order_supp")
-public class OrderSupplemental {
-	private Integer oid;
+public class OrderSupplemental extends Model {
 	private Integer receivablesId;
 
 	public OrderSupplemental() {
 	}
 
 	public OrderSupplemental(Integer oid, Integer receivablesId) {
-		this.oid = oid;
+		super.setId( oid );
 		this.receivablesId = receivablesId;
-	}
-
-	@Id
-	@Column(name = "oid")
-	public Integer getOid() {
-		return oid;
-	}
-
-	public void setOid(Integer oid) {
-		this.oid = oid;
 	}
 
 	public Integer getReceivablesId() {

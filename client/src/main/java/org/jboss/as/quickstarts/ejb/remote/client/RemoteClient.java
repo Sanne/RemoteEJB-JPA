@@ -24,6 +24,8 @@ public final class RemoteClient {
 
             clockLister.verifyOrdersComplexLoading();
 
+            clockLister.callSetIdOnAEnhancedProxy();
+
         } finally {
             clockLister.testDataCleanup();
         }

@@ -9,6 +9,8 @@ public interface ClockLister {
 
     void verifyOrdersComplexLoading();
 
+    void callSetIdOnAEnhancedProxy();
+
     void testDataSetup();
 
     void testDataCleanup();

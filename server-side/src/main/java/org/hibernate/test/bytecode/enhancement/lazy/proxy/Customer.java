@@ -26,8 +26,7 @@ import org.hibernate.annotations.LazyToOneOption;
  */
 @Entity(name = "Customer")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Customer {
-	private Integer oid;
+public abstract class Customer extends Model {
 	private String name;
 	private Set<Order> orders = new HashSet<>();
 
@@ -40,21 +39,12 @@ public abstract class Customer {
 	}
 
 	public Customer(Integer oid, String name, Address address, Customer parentCustomer) {
-		this.oid = oid;
+		super.setId( oid );
 		this.name = name;
 		this.address = address;
 		this.parentCustomer = parentCustomer;
 	}
 
-	@Id
-	@Column(name = "oid")
-	public Integer getOid() {
-		return oid;
-	}
-
-	public void setOid(Integer oid) {
-		this.oid = oid;
-	}
 
 	public String getName() {
 		return name;
