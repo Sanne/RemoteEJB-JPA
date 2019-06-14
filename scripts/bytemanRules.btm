@@ -1,0 +1,1137 @@
+RULE ApplicationServerService_logger_init
+CLASS org.jboss.as.server.ApplicationServerService
+METHOD start
+AT ENTRY
+IF TRUE
+DO link("LOGGER", org.jboss.logging.Logger.getLogger("org.jboss.tracing.SubsystemTracing"));
+ENDRULE
+
+RULE Thread_StringBuilder_init
+CLASS java.lang.Thread
+METHOD <init>
+AT ENTRY
+BIND th:java.lang.Thread = $0;
+IF TRUE
+DO link(th, "STRING_BUILDER", new java.lang.StringBuilder());
+ENDRULE
+
+RULE ApplicationServerService_start_ENTRY
+CLASS org.jboss.as.server.ApplicationServerService
+METHOD start
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":JBOSSAS:ApplicationServerService.start:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE ApplicationServerService_start_EXIT
+CLASS org.jboss.as.server.ApplicationServerService
+METHOD start
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":JBOSSAS:ApplicationServerService.start:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE ManagedReferenceMethodInterceptor_processInvocation_ENTRY
+CLASS org.jboss.as.ee.component.ManagedReferenceMethodInterceptor
+METHOD processInvocation
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":EJB3:ManagedReferenceMethodInterceptor.processInvocation:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE ManagedReferenceMethodInterceptor_processInvocation_EXIT
+CLASS org.jboss.as.ee.component.ManagedReferenceMethodInterceptor
+METHOD processInvocation
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":EJB3:ManagedReferenceMethodInterceptor.processInvocation:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE AssociationImpl_invokeMethod_ENTRY
+CLASS org.jboss.as.ejb3.remote.AssociationImpl
+METHOD invokeMethod
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":EJB3:AssociationImpl.invokeMethod:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE AssociationImpl_invokeMethod_EXIT
+CLASS org.jboss.as.ejb3.remote.AssociationImpl
+METHOD invokeMethod
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":EJB3:AssociationImpl.invokeMethod:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE MethodInvocationMessageHandler_invokeMethod_ENTRY
+CLASS org.jboss.as.ejb3.remote.protocol.versionone.MethodInvocationMessageHandler
+METHOD invokeMethod
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":EJB3:MethodInvocationMessageHandler.invokeMethod:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE MethodInvocationMessageHandler_invokeMethod_EXIT
+CLASS org.jboss.as.ejb3.remote.protocol.versionone.MethodInvocationMessageHandler
+METHOD invokeMethod
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":EJB3:MethodInvocationMessageHandler.invokeMethod:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImpl_internalLoad_ENTRY
+CLASS org.hibernate.internal.SessionImpl
+METHOD internalLoad
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImpl.internalLoad:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImpl_internalLoad_EXIT
+CLASS org.hibernate.internal.SessionImpl
+METHOD internalLoad
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImpl.internalLoad:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE TwoPhaseLoad_postHydrate_ENTRY
+CLASS org.hibernate.engine.internal.TwoPhaseLoad
+METHOD postHydrate
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:TwoPhaseLoad.postHydrate:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE TwoPhaseLoad_postHydrate_EXIT
+CLASS org.hibernate.engine.internal.TwoPhaseLoad
+METHOD postHydrate
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:TwoPhaseLoad.postHydrate:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE TwoPhaseLoad_initializeEntity_ENTRY
+CLASS org.hibernate.engine.internal.TwoPhaseLoad
+METHOD initializeEntity
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:TwoPhaseLoad.initializeEntity:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE TwoPhaseLoad_initializeEntity_EXIT
+CLASS org.hibernate.engine.internal.TwoPhaseLoad
+METHOD initializeEntity
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:TwoPhaseLoad.initializeEntity:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE TwoPhaseLoad_addUninitializedCachedEntity_ENTRY
+CLASS org.hibernate.engine.internal.TwoPhaseLoad
+METHOD addUninitializedCachedEntity
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:TwoPhaseLoad.addUninitializedCachedEntity:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE TwoPhaseLoad_addUninitializedCachedEntity_EXIT
+CLASS org.hibernate.engine.internal.TwoPhaseLoad
+METHOD addUninitializedCachedEntity
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:TwoPhaseLoad.addUninitializedCachedEntity:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE TwoPhaseLoad_addUninitializedEntity_ENTRY
+CLASS org.hibernate.engine.internal.TwoPhaseLoad
+METHOD addUninitializedEntity
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:TwoPhaseLoad.addUninitializedEntity:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE TwoPhaseLoad_addUninitializedEntity_EXIT
+CLASS org.hibernate.engine.internal.TwoPhaseLoad
+METHOD addUninitializedEntity
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:TwoPhaseLoad.addUninitializedEntity:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE TwoPhaseLoad_postLoad_ENTRY
+CLASS org.hibernate.engine.internal.TwoPhaseLoad
+METHOD postLoad
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:TwoPhaseLoad.postLoad:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE TwoPhaseLoad_postLoad_EXIT
+CLASS org.hibernate.engine.internal.TwoPhaseLoad
+METHOD postLoad
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:TwoPhaseLoad.postLoad:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_executeNativeUpdate_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD executeNativeUpdate
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.executeNativeUpdate:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_executeNativeUpdate_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD executeNativeUpdate
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.executeNativeUpdate:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_executeUpdate_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD executeUpdate
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.executeUpdate:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_executeUpdate_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD executeUpdate
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.executeUpdate:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_flush_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD flush
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.flush:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_flush_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD flush
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.flush:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_immediateLoad_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD immediateLoad
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.immediateLoad:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_immediateLoad_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD immediateLoad
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.immediateLoad:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_initializeCollection_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD initializeCollection
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.initializeCollection:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_initializeCollection_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD initializeCollection
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.initializeCollection:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_iterate_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD iterate
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.iterate:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_iterate_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD iterate
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.iterate:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_iterateFilter_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD iterateFilter
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.iterateFilter:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_iterateFilter_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD iterateFilter
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.iterateFilter:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_list_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD list
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.list:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_list_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD list
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.list:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_listCustomQuery_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD listCustomQuery
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.listCustomQuery:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_listCustomQuery_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD listCustomQuery
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.listCustomQuery:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_listFilter_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD listFilter
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.listFilter:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_listFilter_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD listFilter
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.listFilter:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_scroll_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD scroll
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.scroll:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_scroll_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD scroll
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.scroll:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_scrollCustomQuery_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD scrollCustomQuery
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.scrollCustomQuery:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SharedSessionContractImplementor_scrollCustomQuery_EXIT
+INTERFACE ^org.hibernate.engine.spi.SharedSessionContractImplementor
+METHOD scrollCustomQuery
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SharedSessionContractImplementor.scrollCustomQuery:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE EnhancementAsProxyLazinessInterceptor_forceInitialize_ENTRY
+CLASS org.hibernate.bytecode.enhance.spi.interceptor.EnhancementAsProxyLazinessInterceptor
+METHOD forceInitialize
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:EnhancementAsProxyLazinessInterceptor.forceInitialize:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE EnhancementAsProxyLazinessInterceptor_forceInitialize_EXIT
+CLASS org.hibernate.bytecode.enhance.spi.interceptor.EnhancementAsProxyLazinessInterceptor
+METHOD forceInitialize
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:EnhancementAsProxyLazinessInterceptor.forceInitialize:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE LazyAttributeLoadingInterceptor_loadAttribute_ENTRY
+CLASS org.hibernate.bytecode.enhance.spi.interceptor.LazyAttributeLoadingInterceptor
+METHOD loadAttribute
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:LazyAttributeLoadingInterceptor.loadAttribute:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE LazyAttributeLoadingInterceptor_loadAttribute_EXIT
+CLASS org.hibernate.bytecode.enhance.spi.interceptor.LazyAttributeLoadingInterceptor
+METHOD loadAttribute
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:LazyAttributeLoadingInterceptor.loadAttribute:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_executeNativeUpdate_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD executeNativeUpdate
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.executeNativeUpdate:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_executeNativeUpdate_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD executeNativeUpdate
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.executeNativeUpdate:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_executeUpdate_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD executeUpdate
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.executeUpdate:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_executeUpdate_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD executeUpdate
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.executeUpdate:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_flush_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD flush
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.flush:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_flush_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD flush
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.flush:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_immediateLoad_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD immediateLoad
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.immediateLoad:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_immediateLoad_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD immediateLoad
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.immediateLoad:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_initializeCollection_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD initializeCollection
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.initializeCollection:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_initializeCollection_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD initializeCollection
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.initializeCollection:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_iterate_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD iterate
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.iterate:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_iterate_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD iterate
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.iterate:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_iterateFilter_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD iterateFilter
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.iterateFilter:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_iterateFilter_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD iterateFilter
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.iterateFilter:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_list_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD list
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.list:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_list_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD list
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.list:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_listCustomQuery_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD listCustomQuery
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.listCustomQuery:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_listCustomQuery_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD listCustomQuery
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.listCustomQuery:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_listFilter_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD listFilter
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.listFilter:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_listFilter_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD listFilter
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.listFilter:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_scroll_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD scroll
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.scroll:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_scroll_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD scroll
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.scroll:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_scrollCustomQuery_ENTRY
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD scrollCustomQuery
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.scrollCustomQuery:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE SessionImplementor_scrollCustomQuery_EXIT
+INTERFACE ^org.hibernate.engine.spi.SessionImplementor
+METHOD scrollCustomQuery
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":HHH:SessionImplementor.scrollCustomQuery:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE WrappedStatement_execute_ENTRY
+CLASS ^org.jboss.jca.adapters.jdbc.WrappedStatement
+METHOD execute
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":JCA:WrappedStatement.execute:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE WrappedStatement_execute_EXIT
+CLASS ^org.jboss.jca.adapters.jdbc.WrappedStatement
+METHOD execute
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":JCA:WrappedStatement.execute:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE WrappedStatement_executeQuery_ENTRY
+CLASS ^org.jboss.jca.adapters.jdbc.WrappedStatement
+METHOD executeQuery
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":JCA:WrappedStatement.executeQuery:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE WrappedStatement_executeQuery_EXIT
+CLASS ^org.jboss.jca.adapters.jdbc.WrappedStatement
+METHOD executeQuery
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":JCA:WrappedStatement.executeQuery:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE EJBServerChannel$ReceiverImpl_handleMessage_ENTRY
+CLASS ^org.jboss.ejb.protocol.remote.EJBServerChannel$ReceiverImpl
+METHOD handleMessage
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":RMT:EJBServerChannel$ReceiverImpl.handleMessage:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE EJBServerChannel$ReceiverImpl_handleMessage_EXIT
+CLASS ^org.jboss.ejb.protocol.remote.EJBServerChannel$ReceiverImpl
+METHOD handleMessage
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":RMT:EJBServerChannel$ReceiverImpl.handleMessage:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE ChannelAssociation$ResponseReceiver_handleMessage_ENTRY
+CLASS ^org.jboss.ejb.client.remoting.ChannelAssociation$ResponseReceiver
+METHOD handleMessage
+AT ENTRY
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":RMT:ChannelAssociation$ResponseReceiver.handleMessage:ENTRY:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
+RULE ChannelAssociation$ResponseReceiver_handleMessage_EXIT
+CLASS ^org.jboss.ejb.client.remoting.ChannelAssociation$ResponseReceiver
+METHOD handleMessage
+AT EXIT
+BIND
+th = Thread.currentThread();
+logger:org.jboss.logging.JBossLogManagerLogger = linked("LOGGER");
+stringBuilder:java.lang.StringBuilder = linked(th, "STRING_BUILDER");
+IF TRUE
+DO
+logger.info(stringBuilder.append(th.getId()).append(":RMT:ChannelAssociation$ResponseReceiver.handleMessage:EXIT:").append(System.nanoTime()).toString());
+stringBuilder.setLength(0);
+ENDRULE
+
