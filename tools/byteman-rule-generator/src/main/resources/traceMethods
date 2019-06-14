@@ -1,9 +1,14 @@
 #JBOSSAS
 JBOSSAS:org.jboss.as.server:ApplicationServerService:CLASS:N:start
 
-#EJB
-EJB3:org.jboss.as.ejb3.remote:AssociationImpl:CLASS:N:invokeMethod
+#EJB - common
 EJB3:org.jboss.as.ee.component:ManagedReferenceMethodInterceptor:CLASS:N:processInvocation
+
+#EJB - EAP7
+EJB3:org.jboss.as.ejb3.remote:AssociationImpl:CLASS:N:invokeMethod
+
+#EJB - EAP6
+EJB3:org.jboss.as.ejb3.remote.protocol.versionone:MethodInvocationMessageHandler:CLASS:N:invokeMethod
 
 #HHH common
 HHH:org.hibernate.internal:SessionImpl:CLASS:N:internalLoad
@@ -43,11 +48,12 @@ HHH:org.hibernate.engine.spi:SessionImplementor:INTERFACE:Y:listFilter
 HHH:org.hibernate.engine.spi:SessionImplementor:INTERFACE:Y:scroll
 HHH:org.hibernate.engine.spi:SessionImplementor:INTERFACE:Y:scrollCustomQuery
 
-
-
 #JCA
 JCA:org.jboss.jca.adapters.jdbc:WrappedStatement:CLASS:Y:execute
 JCA:org.jboss.jca.adapters.jdbc:WrappedStatement:CLASS:Y:executeQuery
 
 #Remoting - EAP7
 RMT:org.jboss.ejb.protocol.remote:EJBServerChannel$ReceiverImpl:CLASS:Y:handleMessage
+
+#Remoting - EAP6
+RMT:org.jboss.ejb.client.remoting:ChannelAssociation$ResponseReceiver:CLASS:Y:handleMessage
